@@ -1,0 +1,34 @@
+class RendererBackend{
+public:
+  RendererBackend();
+  virtual ~RendererBackend();
+  
+   gl::Context& getContext();
+   virtual void updateAssumedState()=0;
+   virtual void bind()=0;
+   
+   virtual Size getFramebufferSize() const=0;
+   
+protected:
+  virtual gl::ProcAddress getExtensionFunctionPointer(const char*)=0;
+  virtual void activate()=0;
+  virtual void deactivate()=0;
+  
+  PremultipliedImage readFramebuffer(const Size&) const;
+  static constexpr const gl::FramebufferID ImplicitFramebufferBinding = std::numberic_limits<gl::FramebufferID>::max();
+  
+  void assumeFramebufferBinding(gl::FramebufferID fbo);
+  void assumeViewport(int32_t x, int32_t y, const Size&);
+  void assumeScissorTest(bool);
+  
+  bool implicitFramebufferBound();
+  void setFramebufferBinding(gl::FramebufferID fbo);
+  void setViewport(int32_t x, int32_t y, const Size&);
+  void setScissorTest(bool);
+  
+  protected:
+    std::unique_ptr<gl::Context> context;
+  private:
+    std::once_flag initialized;
+    friend class BackendScope;
+};
