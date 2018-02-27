@@ -1,0 +1,20 @@
+事件队列。
+
+1.invoke,invokeCancellable,invokeWithCallback三个函数生成对应的参数及函数队列。
+  invokeCancellable,invokeWithCallback返回包装WorkTask的WorkRequest。
+
+2.run_loop内部中的包含一个WorksTask的Queue，一个锁
+  push函数
+  withMutex函数
+  process处理workTask对象的函数
+  schedule 调度函数。
+
+3.worktask类包括cancel，make,makewidthcallback等函数
+  async_task类构造函数中包括函数，及一个send函数
+  
+4.workrequest派生自AsyncRequest等类，
+
+5.  接口：
+    函数 run();
+    函数 runOnce();
+    函数 stop();
