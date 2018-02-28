@@ -1,0 +1,14 @@
+1.Mailbox类
+a.构造函数
+b.push：添加消息，如果调度器为空，进行调度
+c.关闭
+d.receive：运行第一个消息，同时删除队列中的消息
+e.maybeReceive(std::weak_ptr<Mailbox>)： 调用recieve类
+
+类成员
+a.调度器Scheduler
+b.递归接受锁 std::recursive_mutex
+c.添加锁 pushingMutex
+d.关闭属性 closed
+e.队列锁
+f.消息队列：queue
